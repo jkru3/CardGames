@@ -2,28 +2,31 @@ import java.util.ArrayList;
 
 public class Hand
 {
-    private static DeckOfCards myDeck = new DeckOfCards(); // must be static to make
+    private static DeckOfCards myDeck = new DeckOfCards(); // must be static
     private ArrayList<Card> cardsInHand = new ArrayList<>();
     
-    public Hand()
+    public Hand() // constructor, creates the deck from DeckOfCards
     {
-        myDeck.initializeDeck();
+        //myDeck.initializeDeck();
         this.myDeck = myDeck;
         this.cardsInHand = cardsInHand;
     }
     
-    public ArrayList<Card> checkCards()
+    public Card checkCards() //accessor; returns Card objects to BlackJackGame
     {
-        cardsInHand.get(0);
-        return cardsInHand;
+        return cardsInHand.get(0);
     }
-    //accessor to see size
     
-    public Card dealCard()
+    public void dealCard() //mutator; deals cards from teck
     {
-        Card topCard = myDeck.nextCard();
-        cardsInHand.add(topCard);
-        return topCard;
+        Card newCard = myDeck.nextCard();
+        //System.out.println(String.valueOf(newCard));
+        cardsInHand.add(newCard);
+        //return topCard;
     }
-    //your cards, dealers cards
+    
+    //public int cardValue()
+    {
+    
+    }
 }

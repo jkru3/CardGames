@@ -22,32 +22,28 @@ public class BlackJackGame
     
     public void playGame()
     {
-        //deal();
-        handDealer.dealCard();
+        handDealer.dealCard(); //do a ternary here
         handPlayer.dealCard();
         handDealer.dealCard();
         handPlayer.dealCard();
-        String cardsPlayer = String.valueOf(handPlayer.checkCards());
-        String cardsDealer = String.valueOf(handDealer.checkCards());
-        System.out.println(cardsPlayer + cardsDealer);
-        //System.out.printf("yeet");
-        //playGame(card);
-        //card = handPlayer.dealCard();
-        //playGame(card);
+        System.out.println(handPlayer.checkCards());
+        //String cardsDealer = String.valueOf(handDealer.checkCards());
+        //System.out.println(cardsPlayer + cardsDealer);
     }
     
-    public void deal()
+    /*public int findScore()
     {
-        String card = "";
-        for(int i = 0; i < 2; i++)
+        int oldscore = newScore +
+        int newScore
+        for(int i = 0; i < 0; i++)
         {
-            card = String.valueOf(handDealer.dealCard());
-            dealCards(card);
-            card = String.valueOf(handPlayer.dealCard());
-            dealCards(card);
-        }
-        
-    }
+            char test = testCard.charAt(i)
+            switch
+                case A:
+                    if(oldScore > 11)
+                    
+    }*/
+    
     
     public void dealCards(String card)
     {

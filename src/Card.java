@@ -1,6 +1,6 @@
 public class Card
 {
-    private final String faceAndSuit;
+    private final String faceAndSuit; // two variables here!!
     
     public Card(char face, String suit)
     {
