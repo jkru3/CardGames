@@ -7,14 +7,14 @@ public class Hand
     
     public Hand() // constructor, creates the deck from DeckOfCards
     {
-        //myDeck.initializeDeck();
+        myDeck.initializeDeck();
         this.myDeck = myDeck;
         this.cardsInHand = cardsInHand;
     }
     
-    public Card checkCards() //accessor; returns Card objects to BlackJackGame
+    public Card checkCards(int cardNumber) //accessor; returns Card objects to BlackJackGame
     {
-        return cardsInHand.get(0);
+        return cardsInHand.get(cardNumber);
     }
     
     public void dealCard() //mutator; deals cards from teck

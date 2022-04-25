@@ -1,79 +1,92 @@
-import com.sun.media.jfxmedia.events.PlayerEvent;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
-public class BlackJackGame
+public class BlackJackGame extends GameTable
 {
-    //isEmpty
-    //isFull
-    //MENU
-    
-    private Hand handDealer = new Hand();
-    private Hand handPlayer = new Hand();
-    
-    public BlackJackGame()
-    {
-        this.handDealer = handDealer;
-        this.handPlayer = handPlayer;
-        
-        //input.nextLine()
-    }
-    
     public void playGame()
     {
-        handDealer.dealCard(); //do a ternary here
-        handPlayer.dealCard();
-        handDealer.dealCard();
-        handPlayer.dealCard();
-        System.out.println(handPlayer.checkCards());
+        boolean hideCard = false;
+        int deals = 0;
+        int score = 0;
+        for(int i = 0; i < 6; i++)
+        {
+            handDealer.dealCard(); // do a ternary operation
+            deals++;
+        }
+        printTable(deals, hideCard);
+        score = findScore(deals);
+        //System.out.println(score);
+        //System.out.println(handDealer.checkCards(0));
         //String cardsDealer = String.valueOf(handDealer.checkCards());
         //System.out.println(cardsPlayer + cardsDealer);
     }
     
-    /*public int findScore()
+    public void menu()
     {
-        int oldscore = newScore +
-        int newScore
-        for(int i = 0; i < 0; i++)
+        //nothing
+    }
+    
+    
+    public int findScore(int deals)
+    {
+        int ace = 0;
+        int score = 0;
+        char value = 0;
+        for(int cardNumber = 0; cardNumber < deals; cardNumber++) //for each
         {
-            char test = testCard.charAt(i)
-            switch
-                case A:
-                    if(oldScore > 11)
-                    
-    }*/
+            value = String.valueOf(handDealer.checkCards(cardNumber)).charAt(0);
+            switch(value)
+            {
+                case 'A':
+                    ace++;
+                    break;
+                case '2':
+                    score += 2;
+                    break;
+                case '3':
+                    score += 3;
+                    break;
+                case '4':
+                    score += 4;
+                    break;
+                case '5':
+                    score += 5;
+                    break;
+                case '6':
+                    score += 6;
+                    break;
+                case '7':
+                    score += 7;
+                    break;
+                case '8':
+                    score += 8;
+                    break;
+                case '9':
+                    score += 9;
+                    break;
+                case '1':
+                case 'J':
+                case 'Q':
+                case 'K':
+                    score += 10;
+                    break;
+                default:
+                    score += 0;
+            }
+        }
+        for(int i = 1; i <= ace; ace--)
+        {
+            if(score < 11)
+                score += 11;
+            else
+                score += 1;
+        }
+        return score; //hit stand surrender
+    }
     
-    
-    public void dealCards(String card)
+    public boolean hideCardCheck(int deals)
     {
-            char   face = card.charAt(0);
-            String upperFace;
-            String lowerFace;
-            if(face == 1) {
-                upperFace = face + "0";
-                lowerFace = face + "0";
-            } else {
-                upperFace = face + " ";
-                lowerFace = "_" + face;
-            }
-            char   suit       = card.charAt(2);
-            String suitSymbol = "";
-            switch(suit){
-                case 'S':
-                    suitSymbol = "♤";
-                    break;
-                case 'D':
-                    suitSymbol = "♢";
-                    break;
-                case 'C':
-                    suitSymbol = "♧";
-                    break;
-                case 'H':
-                    suitSymbol = "♡";
-                    break;
-            }
-            System.out.printf("%s%s ", face, suitSymbol);
+        if(deals == 1)
+            return true;
+        else
+            return false;
     }
 }
 

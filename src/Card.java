@@ -1,14 +1,16 @@
 public class Card
 {
-    private final String faceAndSuit; // two variables here!!
+    private final char face;
+    private final String suit;
     
     public Card(char face, String suit)
     {
-        this.faceAndSuit = face + " " + suit;
+        this.face = face;
+        this.suit = suit;
     }
     
     public String toString()
     {
-        return faceAndSuit; // migrate blackjack game switchcase method over here
+        return face + suit;
     }
 }

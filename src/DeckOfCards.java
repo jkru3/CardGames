@@ -8,7 +8,6 @@ public class DeckOfCards
     
     private Card[] deck = new Card[NUMBER_OF_CARDS];
     private int currentCard = 0;
-    //private Something description = new description scanner linereader something
     
     public DeckOfCards() // constructor that initializes the deck
     {
@@ -33,10 +32,11 @@ public class DeckOfCards
             
             Card placeHolder = deck[first];
             deck[first] = deck[second];
-            deck[second] = placeHolder; // could make this it's own method.
-            // It swaps 2 cards randomly
+            deck[second] = placeHolder;
         }
     }
+    
+    //priority queue shuffle method instead of randomized initializeDeck method here?
     
     public Card nextCard()
     {
