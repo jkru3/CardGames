@@ -1,88 +1,83 @@
+// Joseph "Joey" Krueger
+// 04/25/2022
+// CS145
+//
+// Aside from saving space, making GameTable a superclass of BlackJack
+
+import java.util.Scanner;
+
 public class GameTable
 {
-    protected Hand handDealer = new Hand();
-    protected Hand handPlayer = new Hand();
+    protected static int numberOfPlayers = 1;
+    protected Hand    hand[] = new Hand[numberOfPlayers + 1];
     
     public GameTable()
     {
-        this.handDealer = handDealer;
-        this.handPlayer = handPlayer;
+        /*for(int i = 0; i < (1 + this.numberOfPlayers); i++){
+            this.hand[i] = new Hand("inputName", null);
+        }*/
+        this.hand[0] = new Hand("Dealer", null);
+        this.hand[1] = new Hand("Player", null);
     }
     
-    public void printTable(int deals, boolean hideCard)
+    public void printTopOfCard(int p, int c, boolean showCards)
     {
-        int spacing = 0;
-        if(deals > 2)
-            spacing = (deals - 4) * 8 + 3;
-        System.out.print("Player's Hand");
-        for(int s = 0; s < spacing; s++)
-            System.out.print(" ");
-        System.out.print("Dealer's Hand");
-        System.out.println();
+        boolean hideCard = hideCardCheck(p, c, showCards);
+        char   face = String.valueOf(hand[p].checkCards(c)).charAt(0);
+        String upperFace;
+        if(hideCard) {
+            upperFace = "  ";
+        } else if(face == 49) {
+            upperFace = "10";
+        } else {
+            upperFace = face + " ";
+        }
+        System.out.printf("|%s |   ", upperFace);
         
-        for(int i = 0; i < deals; i++)
-            System.out.printf(" ___    ");
-        System.out.println();
-        
-        for(int j = 0; j < deals; j++)
-        {
-            hideCard = hideCardCheck(j, deals);
-            char   face = String.valueOf(handDealer.checkCards(j)).charAt(0);
-            String upperFace;
-            if(hideCard) {
-                upperFace = "  ";
-            } else if(face == 49) {
-                upperFace = "10";
-            } else {
-                upperFace = face + " ";
-            }
-            System.out.printf("|%s |   ", upperFace);
-        }
-        System.out.println();
-        for(int k = 0; k < deals; k++)
-        {
-            hideCard = hideCardCheck(k, deals);
-            char   suit       = String.valueOf(handDealer.checkCards(k)).charAt(1);
-            String suitSymbol = "";
-            switch(suit){
-                case 'S':
-                    suitSymbol = "♤";
-                    break;
-                case 'D':
-                    suitSymbol = "♢";
-                    break;
-                case 'C':
-                    suitSymbol = "♧";
-                    break;
-                case 'H':
-                    suitSymbol = "♡";
-                    break;
-            }
-            if(hideCard)
-                suitSymbol = "?";
-            System.out.printf("| %s |   ", suitSymbol);
-        }
-        System.out.println();
-        for(int l = 0; l < deals; l++)
-        {
-            hideCard = hideCardCheck(l, deals);
-            char face = String.valueOf(handDealer.checkCards(l)).charAt(0);
-            String lowerFace;
-            if(hideCard) {
-                lowerFace = "__";
-            } else if(face == 49) {
-                lowerFace = "10";
-            } else {
-                lowerFace = "_" + face;
-            }
-            System.out.printf("|_%s|   ", lowerFace);
-        }
-        System.out.println();
     }
     
-    public boolean hideCardCheck(int hiddenCard, int deals)
+    public void printMiddleOfCard(int p, int n, boolean showCards)
     {
-        if(hiddenCard == deals - 1)
+        boolean hideCard = hideCardCheck(p, n, showCards);
+        char   suit = String.valueOf(hand[p].checkCards(n)).charAt(1);
+        String suitSymbol = "";
+        switch(suit){
+            case 'S':
+                suitSymbol = "♤";
+                break;
+            case 'D':
+                suitSymbol = "♢";
+                break;
+            case 'C':
+                suitSymbol = "♧";
+                break;
+            case 'H':
+                suitSymbol = "♡";
+                break;
+        }
+        if(hideCard)
+            suitSymbol = "?";
+        System.out.printf("| %s |   ", suitSymbol);
+    }
+    
+    public void printBottomOfCard(int p, int n, boolean showCards)
+    {
+        boolean hideCard = hideCardCheck(p, n, showCards);
+        char   face = String.valueOf(hand[p].checkCards(n)).charAt(0);
+        String lowerFace;
+        if(hideCard) {
+            lowerFace = "__";
+        } else if(face == 49) {
+            lowerFace = "10";
+        } else {
+            lowerFace = "_" + face;
+        }
+        System.out.printf("|_%s|   ", lowerFace);
+    }
+    
+    public boolean hideCardCheck(int p, int n, boolean showCards)
+    {
+        if(p == 0 && n == 1 && hand[0].checkSize() == 2 && !showCards)
             return true;
         else
             return false;

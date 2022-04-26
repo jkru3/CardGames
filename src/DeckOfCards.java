@@ -1,12 +1,19 @@
+// Joseph "Joey" Krueger
+// 04/25/2022
+// CS145
+//
+//e
+
 import java.util.Random;
 
 public class DeckOfCards
 {
     
     private static final Random random = new Random();
+    private static final int NUMBER_OF_DECKS = 1;
     private static final int NUMBER_OF_CARDS = 52;
     
-    private Card[] deck = new Card[NUMBER_OF_CARDS];
+    private Card[] deck = new Card[NUMBER_OF_CARDS * NUMBER_OF_DECKS];
     private int currentCard = 0;
     
     public DeckOfCards() // constructor that initializes the deck
