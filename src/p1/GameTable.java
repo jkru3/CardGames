@@ -2,7 +2,9 @@
 // 04/25/2022
 // CS145
 //
-// Aside from saving space, making GameTable a superclass of BlackJack
+// GameTable is only a subclass of BlackJack to receive the timer() method
+// This class prints out cards into the console
+// it also constructs all the "hands" that will be used in the game
 
 package p1;
 public class GameTable extends JavaCasino

@@ -2,7 +2,10 @@
 // 04/25/2022
 // CS145
 //
-//e
+// The only difference in this class from the one shown in class is cardsRemaining(),
+// which is a Getter that returns the remaining number of cards in the deck and
+// shuffleDeck, which uses Queues to split the deck into 2 "hands", and layer them,
+// one on top of the other.
 
 package p1;
 import java.util.*;

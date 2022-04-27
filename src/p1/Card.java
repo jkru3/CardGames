@@ -2,7 +2,7 @@
 // 04/25/2022
 // CS145
 //
-//
+// This class is the main card object
 
 package p1;
 

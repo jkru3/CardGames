@@ -2,7 +2,9 @@
 // 04/25/2022
 // CS145
 //
-//
+// this program extends GameTable. The reason for doing so, is that it allows me to reuse
+// code for the actual printing of the cards for different card games
+
 package p1;
 import java.util.Scanner;
 

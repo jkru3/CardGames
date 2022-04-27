@@ -2,7 +2,11 @@
 // 04/25/2022
 // CS145
 //
-//
+// CardStack is an object that defines card groupings. In this game there are 3
+// Hand[0] is the dealers hand
+// Hand[1] is the players hand
+// deckModify allows Gametable to access the initialized deck, randomize it, shuffle it,
+// and count how many cards are remaining in the deck
 
 package p1;
 
@@ -52,18 +56,18 @@ public class CardStack
         this.myDeck = myDeck;
     }
     
-    public void initializeDeck() //randomizes the deck at the beginning of the game
+    public void initializeDeck() //setter; randomizes the deck at the beginning of the game
     {
         myDeck.initializeDeck();
     }
     
-    public int remainingCards() //returns the integer of remaining cards in the deck left
-    {
-        return myDeck.remainingCards();
-    }
-    
-    public void shuffleDeck() //shuffles the deck with queues
+    public void shuffleDeck() //setter; shuffles the deck with queues
     {
         myDeck.shuffleDeck();
+    }
+    
+    public int remainingCards() //getter; returns the integer of remaining cards in the deck left
+    {
+        return myDeck.remainingCards();
     }
 }
