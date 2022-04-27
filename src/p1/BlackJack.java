@@ -3,43 +3,54 @@
 // CS145
 //
 //
-
+package p1;
 import java.util.Scanner;
 
 public class BlackJack extends GameTable
 {
-    public void instructions()
+    public void instructionsBlackJack()
     {
         System.out.print("\nWelcome to Blackjack\n");
-        timer("", false, 1500);
+        timer("", false, 1200);
         System.out.print("\tYou will be dealt 2 cards.\n" +
-                          "\tThe Dealer will also be dealt 2 cards with one facing down.\n" +
-                          "\tYou may choose to \"hit\" if you'd like to try for higher hand.");
+                         "\tThe Dealer will also be dealt 2 cards with one facing down.\n" +
+                         "\tYou may choose to \"hit\" if you'd like to try for higher hand.");
         timer("", false, 1500);
         System.out.print("\tHowever, If you go over 21 or score equal to or less than " +
-                          "the dealer, you lose");
+                         "the dealer, you lose");
         timer("", false, 1000);
         System.out.print("\tFace cards (J, Q, K) equal 10 and Aces equal 1 or 11\n" +
-                          "\tWinning with 21 is \"Blackjack\" " +
-                          "and worth 1.5x your bet!\n");
-        timer("", false, 1250);
+                         "\tWinning with 21 is \"Blackjack\" " +
+                         "and worth 1.5x your bet!\n");
+        timer("", false, 1200);
     }
     
     public void playGame(Scanner input)
     {
-        String playAgain = "";
+        String playAgain  = "";
         String hitOrStand = "";
         
-        instructions();
+        instructionsBlackJack();
+        deckModify.initializeDeck(); //randomizes cards
         do{
-            int[] score = new int[2]; // this block deals the first 4 cards
-            for(int i = 0; i < 4; i++)
-                hand[i % 2].dealCard();
-            printCards(false);
-            score[0] = findScore(0);
-            score[1] = findScore(1);
+            if(deckModify.remainingCards() > 26) {
+                timer("Shuffling deck", true, 600);
+                deckModify.shuffleDeck(); //shuffles cards with 2 Queues once the number
+                System.out.println();     //of cards in the deck gets low
+            }
             
-            do{ // Player's turn
+            int[] score = new int[numberOfPlayers]; //this block deals the first 4 cards
+            for(int i = 0; i < (numberOfPlayers) * 2; i++){
+                hand[i % 2].dealCard();
+            }
+            printCards(false);
+            for(int j = 0; j < numberOfPlayers; j++){
+                score[j] = findScore(j);
+                //initializes the score for all the players in the game
+            }
+    
+            //Player's turn
+            do{
                 System.out.print("\n(H)it or (S)tand? ");
                 hitOrStand = input.next();
                 if(hitOrStand.charAt(0) == 'H' || hitOrStand.charAt(0) == 'h') {
@@ -51,9 +62,10 @@ public class BlackJack extends GameTable
                 score[1] = findScore(1);
             }while(score[1] <= 21 && hitOrStand.charAt(0) != 'S' &&
                    hitOrStand.charAt(0) != 's');
-            
-            while(score [1] <= 21 && score[0] < 17 ||
-                  score [1] <= 21 && score[1] > score[0]) // dealers turn
+    
+            //dealers turn
+            while(score[1] <= 21 && score[0] < 17 ||
+                  score[1] <= 21 && score[1] > score[0])
             {
                 timer("Dealer draws", true, 300);
                 System.out.println();
@@ -61,24 +73,21 @@ public class BlackJack extends GameTable
                 printCards(true);
                 score[0] = findScore(0);
             }
-                // now the scores will be added up
+            
+            //now the scores will be added up
             System.out.println();
             if(score[1] > 21) {
                 System.out.println("Player goes bust");
-                clearHands();
             } else if(score[0] > 21) {
                 System.out.println("Dealer goes bust, Player wins!");
-                clearHands();
             } else if(score[1] == 21 && score[0] < 21) {
                 System.out.println("Blackjack!! Player wins!");
-                clearHands();
             } else if(score[1] <= score[0]) {
                 System.out.println("Dealer wins");
-                clearHands();
             } else {
                 System.out.println("Player wins!");
-                clearHands();
             }
+            clearHands();
             timer("", false, 900);
             System.out.print("Play again? (Y)es or (N)o: ");
             playAgain = input.next();
@@ -86,77 +95,23 @@ public class BlackJack extends GameTable
         }while(playAgain.charAt(0) != 'N' && playAgain.charAt(0) != 'n');
     }
     
-    public void printCards(boolean showCards) // See GameTable for the actual print functions
-    {
-        int spacing = hand[1].checkSize() * 8 - 13;
-        System.out.print("Player's Hand");
-        for(int s = 0; s < spacing; s++)
-            System.out.print(" ");
-        System.out.print("Dealer's Hand");
-        System.out.println();
-        
-        for(int i = 0; i < (hand[0].checkSize() + hand[1].checkSize()); i++)
-            System.out.printf(" ___    ");
-        System.out.println();
-        
-        for(int c = 0; c < hand[1].checkSize(); c++)
-            printTopOfCard(1, c, showCards);
-        for(int c = 0; c < hand[0].checkSize(); c++)
-            printTopOfCard(0, c, showCards);
-        System.out.println();
-        
-        for(int c = 0; c < hand[1].checkSize(); c++)
-            printMiddleOfCard(1, c, showCards);
-        for(int c = 0; c < hand[0].checkSize(); c++)
-            printMiddleOfCard(0, c, showCards);
-        System.out.println();
-        
-        for(int c = 0; c < hand[1].checkSize(); c++)
-            printBottomOfCard(1, c, showCards);
-        for(int c = 0; c < hand[0].checkSize(); c++)
-            printBottomOfCard(0, c, showCards);
-        System.out.println();
-    }
-    
-    private void timer(String string, boolean loading, int millis)
-    {
-        System.out.print(string);
-        try
-        {
-            Thread.sleep(millis);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        if(loading){
-            for(int i = 0; i < 3; i++){
-                System.out.print(".");
-                try
-                {
-                    Thread.sleep(millis);
-                } catch(InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-        }
-        System.out.println();
-    }
-    
     public void clearHands()
     {
-        hand[1].clearHand(); //could be turned into a for loop for all players
-        hand[0].clearHand();
+        for(int i = 0; i < numberOfPlayers; i++){
+            hand[i].clearHand();
+        }
     }
     
     public int findScore(int player)
     {
-        int aces = 0;
-        int score = 0;
+        int  aces  = 0;
+        int  score = 0;
         char value = 0;
-        for(int cardNumber = 0; cardNumber < hand[player].checkSize(); cardNumber++) //for each
+        for(int cardNumber = 0; cardNumber < hand[player].checkHandSize();
+            cardNumber++)
         {
-            value = String.valueOf(hand[player].checkCards(cardNumber)).charAt(0);
-            switch(value)
-            {
+            value = String.valueOf(hand[player].whatIsCard(cardNumber)).charAt(0);
+            switch(value){
                 case 'A':
                     aces++;
                     break;
@@ -194,14 +149,13 @@ public class BlackJack extends GameTable
                     score += 0;
             }
         }
-        for(int i = 1; i <= aces; aces--)
-        {
-            if(score < (12 - aces))
+        for(int i = 1; i <= aces; aces--){
+            if(score < (12 - aces)) {
                 score += 11;
-            else
+            } else {
                 score += 1;
+            }
         }
         return score; //hit stand surrender
     }
 }
-

@@ -4,6 +4,8 @@
 //
 //
 
+package p1;
+
 public class Card
 {
     private final char face;
